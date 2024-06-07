@@ -1,23 +1,54 @@
-[build-system]
-requires = [
-  "setuptools>=18.0",
-  "wheel",
-  "cython",
-  "numpy>=1.21.3",
-  "torch>=1.10",
+[project]
+name = "gslm-overlap"
+version = "0.1.0"
+description = "Add your description here"
+authors = [{ name = "Kohei ASAI", email = "ko2001he@gmail.com" }]
+dependencies = [
+    "joblib>=1.4.2",
+    "scikit-learn>=1.5.0",
+    "soundfile>=0.12.1",
+    "fairseq @ git+ssh://github.com/pytorch/fairseq",
+    "tensorboardx>=2.6.2.2",
+    "ratarmount>=0.15.1",
+    "librosa>=0.10.2.post1",
+    "apex>=0.9.10.dev0",
+    "pyarrow>=16.1.0",
+    "torch==2.2.2",
+    "torchvision==0.17.2",
+    "torchaudio==2.2.2",
+    "numpy==1.26.3",
 ]
-build-backend = "setuptools.build_meta"
+readme = "README.md"
+requires-python = ">= 3.8"
 
-[tool.black]
-extend-exclude = '''
-(
-^/examples/|
-^/fairseq/model_parallel/megatron|
-^/build/
-)
-'''
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.isort]
-profile = "black"
-known_third_party = "_cffi_backend,agg_results,aml,bitarray,boto3,botocore,dump_hubert_feature,dynamicconv_cuda,editdistance,faiss,fasttext,feature_utils,ffmpeg,g2p_en,h5py,hydra,hypothesis,indicnlp,inflect,iopath,joblib,kaldi_io,kenlm,libfb,librosa,lightconv_cuda,matplotlib,misc,mmpt,mmpt_cli,model,nltk,npy_append_array,numpy,omegaconf,pandas,pathbuilder,preprocessing,progressbar,pythainlp,random_sequence_shuffler,regex,sacrebleu,sacremoses,scipy,sentencepiece,setuptools,six,sklearn,soundfile,sweep,sweep_wmt_en2de_transformer_big_common,tabulate,torch,torchaudio,tqdm,unidecode,utils,videoreader,wav2vec_cluster_faiss,wget,yaml"
-skip_gitignore = true
+[tool.rye]
+managed = true
+dev-dependencies = ["ruff>=0.4.6"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
+
+[tool.ruff]
+exclude = [".venv"]
+line-length = 150
+indent-width = 4
+fix = true
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+fixable = ["ALL"]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.pyright]
+include = ["src"]
+venvPath = "."
+venv = ".venv"
