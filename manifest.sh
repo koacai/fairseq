@@ -11,6 +11,6 @@ source .venv/bin/activate
 
 ratarmount corpus/hq-youtube.tar /dev/shm/hq-youtube_mount
 python3 examples/wav2vec/wav2vec_manifest.py /dev/shm/hq-youtube_mount \
-  ----dest manifest \
-  ----ext flac \
-  ----valid-percent 0.01
+  --dest manifest \
+  --ext flac \
+  --valid-percent 0.01
