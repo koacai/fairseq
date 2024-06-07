@@ -3,6 +3,7 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
+import librosa
 import soundfile as sf
 import torch
 import torch.nn.functional as F
@@ -39,6 +40,9 @@ class HubertFeatureReader:
         if wav.ndim == 2:
             wav = wav.mean(-1)
         assert wav.ndim == 1, wav.ndim
+        if sr != self.task.cfg.sample_rate:
+            wav = librosa.resample(wav, orig_sr=sr, target_sr=self.task.cfg.sample_rate)
+            sr = self.task.cfg.sample_rate
         assert sr == self.task.cfg.sample_rate, sr
         if ref_len is not None and abs(ref_len - len(wav)) > 160:
             print(f"ref {ref_len} != read {len(wav)} ({path})")
