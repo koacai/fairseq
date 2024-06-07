@@ -32,11 +32,9 @@ class CpcFeatureReader:
     def read_audio(self, path, ref_len=None, channel_id=None):
         wav, sr = sf.read(path)
         if channel_id is not None:
-            assert wav.ndim == 2, \
-                f"Expected stereo input when channel_id is given ({path})"
-            assert channel_id in [1, 2], \
-                "channel_id is expected to be in [1, 2]"
-            wav = wav[:, channel_id-1]
+            assert wav.ndim == 2, f"Expected stereo input when channel_id is given ({path})"
+            assert channel_id in [1, 2], "channel_id is expected to be in [1, 2]"
+            wav = wav[:, channel_id - 1]
         if wav.ndim == 2:
             wav = wav.mean(-1)
         assert wav.ndim == 1, wav.ndim
@@ -89,9 +87,7 @@ def load_cpc_model(checkpoint_path, layer=None):
         config["nLevelsGRU"] = layer
 
     encoder = CPCEncoder(config["hiddenEncoder"])
-    ar_net = CPCAR(
-        config["hiddenEncoder"], config["hiddenGar"], False, config["nLevelsGRU"]
-    )
+    ar_net = CPCAR(config["hiddenEncoder"], config["hiddenGar"], False, config["nLevelsGRU"])
 
     model = CPCModel(encoder, ar_net)
     model.load_state_dict(weights, strict=False)
@@ -158,9 +154,7 @@ class CPCEncoder(nn.Module):
 class CPCAR(nn.Module):
     def __init__(self, dim_encoded, dim_output, keep_hidden, num_layers):
         super(CPCAR, self).__init__()
-        self.baseNet = nn.LSTM(
-            dim_encoded, dim_output, num_layers=num_layers, batch_first=True
-        )
+        self.baseNet = nn.LSTM(dim_encoded, dim_output, num_layers=num_layers, batch_first=True)
         self.hidden = None
         self.keep_hidden = keep_hidden
 

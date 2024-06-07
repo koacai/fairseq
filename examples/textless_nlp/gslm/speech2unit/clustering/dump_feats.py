@@ -12,9 +12,7 @@ from examples.textless_nlp.gslm.speech2unit.pretrained.utils import (
 
 
 def get_parser():
-    parser = argparse.ArgumentParser(
-        description="Compute and dump log mel fbank features."
-    )
+    parser = argparse.ArgumentParser(description="Compute and dump log mel fbank features.")
     parser.add_argument(
         "--feature_type",
         type=str,
