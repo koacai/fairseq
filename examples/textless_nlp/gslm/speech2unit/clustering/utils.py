@@ -12,9 +12,7 @@ def get_audio_files(manifest_path: str) -> Tuple[str, List[str], List[int]]:
         root_dir = f.readline().strip()
         for line in f:
             items = line.strip().split("\t")
-            assert (
-                len(items) == 2
-            ), f"File must have two columns separated by tab. Got {line}"
+            assert len(items) == 2, f"File must have two columns separated by tab. Got {line}"
             fnames.append(items[0])
             sizes.append(int(items[1]))
     return root_dir, fnames, sizes

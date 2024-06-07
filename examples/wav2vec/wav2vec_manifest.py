@@ -17,9 +17,7 @@ import soundfile
 
 def get_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "root", metavar="DIR", help="root directory containing flac files to index"
-    )
+    parser.add_argument("root", metavar="DIR", help="root directory containing flac files to index")
     parser.add_argument(
         "--valid-percent",
         default=0.01,
@@ -27,12 +25,8 @@ def get_parser():
         metavar="D",
         help="percentage of data to use as validation set (between 0 and 1)",
     )
-    parser.add_argument(
-        "--dest", default=".", type=str, metavar="DIR", help="output directory"
-    )
-    parser.add_argument(
-        "--ext", default="flac", type=str, metavar="EXT", help="extension to look for"
-    )
+    parser.add_argument("--dest", default=".", type=str, metavar="DIR", help="output directory")
+    parser.add_argument("--ext", default="flac", type=str, metavar="EXT", help="extension to look for")
     parser.add_argument("--seed", default=42, type=int, metavar="N", help="random seed")
     parser.add_argument(
         "--path-must-contain",
@@ -54,11 +48,7 @@ def main(args):
     search_path = os.path.join(dir_path, "**/*." + args.ext)
     rand = random.Random(args.seed)
 
-    valid_f = (
-        open(os.path.join(args.dest, "valid.tsv"), "w")
-        if args.valid_percent > 0
-        else None
-    )
+    valid_f = open(os.path.join(args.dest, "valid.tsv"), "w") if args.valid_percent > 0 else None
 
     with open(os.path.join(args.dest, "train.tsv"), "w") as train_f:
         print(dir_path, file=train_f)
@@ -74,9 +64,7 @@ def main(args):
 
             frames = soundfile.info(fname).frames
             dest = train_f if rand.random() > args.valid_percent else valid_f
-            print(
-                "{}\t{}".format(os.path.relpath(file_path, dir_path), frames), file=dest
-            )
+            print("{}\t{}".format(os.path.relpath(file_path, dir_path), frames), file=dest)
     if valid_f is not None:
         valid_f.close()
 

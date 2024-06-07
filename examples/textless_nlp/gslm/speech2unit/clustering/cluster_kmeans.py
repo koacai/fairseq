@@ -8,10 +8,10 @@ import logging
 import os
 import time
 
+import joblib
 import numpy as np
 from sklearn.cluster import MiniBatchKMeans
 
-import joblib
 from examples.textless_nlp.gslm.speech2unit.pretrained.utils import (
     get_and_dump_features,
     get_features,
@@ -26,14 +26,10 @@ def get_logger():
 
 
 def get_parser():
-    parser = argparse.ArgumentParser(
-        description="Learn K-means clustering over acoustic features."
-    )
+    parser = argparse.ArgumentParser(description="Learn K-means clustering over acoustic features.")
 
     # Features arguments
-    parser.add_argument(
-        "--in_features_path", type=str, default=None, help="Features file path"
-    )
+    parser.add_argument("--in_features_path", type=str, default=None, help="Features file path")
     parser.add_argument(
         "--feature_type",
         type=str,
@@ -72,9 +68,7 @@ def get_parser():
     )
 
     # K-means arguments
-    parser.add_argument(
-        "--num_clusters", type=int, help="Nubmer of clusters", default=50
-    )
+    parser.add_argument("--num_clusters", type=int, help="Nubmer of clusters", default=50)
     parser.add_argument("--init", default="k-means++")
     parser.add_argument(
         "--max_iter",
@@ -174,9 +168,7 @@ def main(args, logger):
             )
         )
         if args.out_features_path:
-            logger.info(
-                f"Saved extracted features at {args.out_features_path}"
-            )
+            logger.info(f"Saved extracted features at {args.out_features_path}")
     logger.info(f"Features shape = {features_batch.shape}\n")
 
     # Learn and save K-means model
@@ -192,9 +184,7 @@ def main(args, logger):
         random_state=args.seed,
     )
     logger.info("Starting k-means training...")
-    kmeans_model, time_taken = train_kmeans(
-        kmeans_model=kmeans_model, features_batch=features_batch
-    )
+    kmeans_model, time_taken = train_kmeans(kmeans_model=kmeans_model, features_batch=features_batch)
     logger.info(f"...done k-means training in {time_taken} minutes")
     inertia = -kmeans_model.score(features_batch) / len(features_batch)
     logger.info(f"Total intertia: {round(inertia, 2)}\n")
