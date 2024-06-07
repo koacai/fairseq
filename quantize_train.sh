@@ -19,7 +19,7 @@ for file in manifest/train_split/split_*; do
   MANIFEST=$file
   KM_MODEL_PATH=models/km_model.bin
   OUT_QUANTIZED_FILE=quantized/quantized_$(basename $file)
-  CUDA_VISIBLE_DEVICES=$rank python ./examples/textless_nlp/gslm/speech2unit/clustering/quantize_with_kmeans.py \
+  CUDA_VISIBLE_DEVICES=$rank python examples/textless_nlp/gslm/speech2unit/clustering/quantize_with_kmeans.py \
     --feature_type $TYPE \
     --kmeans_model_path $KM_MODEL_PATH \
     --acoustic_model_path $CKPT_PATH \
