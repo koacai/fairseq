@@ -4,7 +4,6 @@
 #PJM -g ge43
 #PJM -j
 source /etc/profile.d/modules.sh
-export PATH="$HOME/ffmpeg-7.0-amd64-static:$PATH"
 module load gcc/12.2.0
 module load cuda/12.1
 source .venv/bin/activate
