@@ -3,6 +3,7 @@
 #PJM -L gpu=1
 #PJM -g ge43
 #PJM -j
+set -x
 source /etc/profile.d/modules.sh
 module load gcc/12.2.0
 module load cuda/12.1
