@@ -141,3 +141,5 @@ corpus/
 manifest/
 quantized/
 models/
+
+container.sif
