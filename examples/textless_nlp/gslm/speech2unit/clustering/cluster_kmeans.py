@@ -155,6 +155,7 @@ def main(args, logger):
                 manifest_path=args.manifest_path,
                 sample_pct=args.sample_pct,
                 flatten=True,
+                channel_id=None,
             )
             if not args.out_features_path
             else get_and_dump_features(
