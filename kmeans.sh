@@ -10,7 +10,7 @@ module load gcc/12.2.0
 module load cuda/12.1
 source .venv/bin/activate
 
-ratarmount corpus/hq-youtube.tar.xz /dev/shm/hq-youtube_mount
+ratarmount corpus/hq-youtube.tar /dev/shm/hq-youtube_mount
 
 N_CLUSTERS=500
 TYPE=hubert
@@ -18,6 +18,7 @@ CKPT_PATH=models/hubert/iter2_ckpt/checkpoints/checkpoint_last.pt
 LAYER=12
 MANIFEST=manifest/train.tsv
 KM_MODEL_PATH=models/km_model.bin
+SAMPLE_PCT=0.05
 
 PYTHONPATH=. python examples/textless_nlp/gslm/speech2unit/clustering/cluster_kmeans.py \
     --num_clusters $N_CLUSTERS \
@@ -25,4 +26,5 @@ PYTHONPATH=. python examples/textless_nlp/gslm/speech2unit/clustering/cluster_km
     --checkpoint_path $CKPT_PATH \
     --layer $LAYER \
     --manifest_path $MANIFEST \
-    --out_kmeans_model_path $KM_MODEL_PATH
+    --out_kmeans_model_path $KM_MODEL_PATH \
+    --sample_pct=$SAMPLE_PCT
